@@ -1,8 +1,7 @@
-import 'package:bmicalculatorapp/container_box_sexo.dart';
-import 'package:bmicalculatorapp/data_container_sexo.dart';
+import 'package:bmicalculatorapp/container_box.dart';
+import 'package:bmicalculatorapp/data_container.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 
 const activeColor = Color(0xFF566de5);
 const inActiveColor = Color(0xFFffffffff);
@@ -15,29 +14,32 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   Color maleBoxColor = activeColor;
   Color femaleBoxColor = inActiveColor;
+  int height = 180;
+  int weight = 70;
+  int age = 25;
 
-  void updateBoxColor(int gender){
-    if(gender == 1){
-      if(maleBoxColor == inActiveColor){
+  void updateBoxColor(int gender) {
+    if (gender == 1) {
+      if (maleBoxColor == inActiveColor) {
         maleBoxColor = activeColor;
         femaleBoxColor = inActiveColor;
-      }else{
+      } else {
         maleBoxColor = inActiveColor;
         femaleBoxColor = activeColor;
       }
-    }else{
-      if(femaleBoxColor == inActiveColor){
+    } else {
+      if (femaleBoxColor == inActiveColor) {
         femaleBoxColor = activeColor;
         maleBoxColor = inActiveColor;
-      }else{
+      } else {
         femaleBoxColor = inActiveColor;
         maleBoxColor = activeColor;
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,86 +51,186 @@ class _MainScreenState extends State<MainScreen> {
           Expanded(
               child: Row(children: <Widget>[
             Expanded(
-              child: GestureDetector(
-                onTap: (){
-                  setState(() {
-                    updateBoxColor(1);
-                  });
-                },
-                child: ContainerBoxSexo(
-                boxColor: maleBoxColor,
-                childWidget: DataContainerSexo(icon: FontAwesomeIcons.mars, title: 'MALE',),
-            )
-              )),
+                child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateBoxColor(1);
+                      });
+                    },
+                    child: ContainerBox(
+                      boxColor: maleBoxColor,
+                      childWidget: DataContainer(
+                        icon: FontAwesomeIcons.mars,
+                        title: 'MALE',
+                      ),
+                    ))),
             Expanded(
-              child: GestureDetector(
-                onTap: (){
-                  setState(() {
-                    updateBoxColor(2);
-                  });
-                },
-                child: ContainerBoxSexo(
-                boxColor: femaleBoxColor,
-                childWidget: DataContainerSexo (icon: FontAwesomeIcons.venus, title: 'FEMALE',),
-            )
-              )),
+                child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateBoxColor(2);
+                      });
+                    },
+                    child: ContainerBox(
+                      boxColor: femaleBoxColor,
+                      childWidget: DataContainer(
+                        icon: FontAwesomeIcons.venus,
+                        title: 'FEMALE',
+                      ),
+                    ))),
           ])),
-
           Expanded(
-            child: Container(
-              margin: EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color(0xFFffffff),
-                 boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5.0,
-                    blurRadius: 7.0,
-                    offset: Offset(0, 3),
+            child: ContainerBox(
+              boxColor: Color(0xFFffffff),
+              childWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'HEIGHT',
+                    style: textStyle1,
                   ),
-                ]
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: textStyle2,
+                      ),
+                      Text(
+                        'cm',
+                        style: textStyle1,
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    value: height.toDouble(),
+                    min: 120,
+                    max: 220,
+                    activeColor: activeColor,
+                    inactiveColor: inActiveColor,
+                    onChanged: (double newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+                    },
+                  )
+                ],
               ),
             ),
           ),
           Expanded(
               child: Row(children: <Widget>[
             Expanded(
-                child:Container(
-              margin: EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color(0xFFffffff),
-                 boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5.0,
-                    blurRadius: 7.0,
-                    offset: Offset(0, 3),
+                child: ContainerBox(
+              boxColor: Color(0xFFffffff),
+              childWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'WEIGHT',
+                    style: textStyle1,
                   ),
-                ]
+                  Text(
+                    weight.toString(),
+                    style: textStyle2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FloatingActionButton(
+                        onPressed: () {
+                          setState(() {
+                            weight++;
+                          });
+                        },
+                        backgroundColor: activeColor,
+                        child: Icon(FontAwesomeIcons.plus, color: Colors.white),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          setState(() {
+                            if(weight > 0){
+                              weight--;
+                            }
+                          });
+                        },
+                        backgroundColor: activeColor,
+                        child: Icon(FontAwesomeIcons.minus, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             )),
             Expanded(
-              child:Container(
-              margin: EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color(0xFFffffff),
-                 boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5.0,
-                    blurRadius: 7.0,
-                    offset: Offset(0, 3),
+                  child: ContainerBox(
+              boxColor: Color(0xFFffffff),
+              childWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'AGE',
+                    style: textStyle1,
                   ),
-                ]
+                  Text(
+                    age.toString(),
+                    style: textStyle2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FloatingActionButton(
+                        onPressed: () {
+                          setState(() {
+                            age++;
+                          });
+                        },
+                        backgroundColor: activeColor,
+                        child: Icon(FontAwesomeIcons.plus, color: Colors.white),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          setState(() {
+                            if(age > 0){
+                              age--;
+                            }
+                          });
+                        },
+                        backgroundColor: activeColor,
+                        child: Icon(FontAwesomeIcons.minus, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             )),
           ])),
+          Container(
+            child: Center(
+              child: Text(
+                'Calcuate',
+                style: textStyle3,
+              ),
+            ),
+            width: double.infinity,
+            height: 80.0,
+            color: activeColor,
+            margin: EdgeInsets.only(top: 10.0),
+          )
         ],
       ),
     );
   }
 }
-//22:2
+//29:46
+
+
+//31

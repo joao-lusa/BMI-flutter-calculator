@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ContainerBoxSexo extends StatelessWidget {
+class ContainerBox extends StatelessWidget {
   final Color boxColor;
   final Widget childWidget;
 
-  ContainerBoxSexo({required this.boxColor, required this.childWidget});
+  ContainerBox({required this.boxColor, required this.childWidget});
 
   @override
   Widget build(BuildContext context) {
